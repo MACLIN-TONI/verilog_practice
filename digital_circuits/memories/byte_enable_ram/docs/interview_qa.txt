@@ -1,0 +1,189 @@
+Byte-Enabled RAM: Interview Questions and Answers
+=================================================
+
+Fundamentals and interface
+--------------------------
+
+1. What is a byte-enabled RAM?
+
+It is a memory whose write data is divided into byte lanes. Each byte-enable
+bit decides whether its corresponding 8-bit lane is updated; disabled lanes
+retain their previous contents.
+
+2. What does a 16 x 32 RAM contain?
+
+It contains 16 words, each 32 bits wide, for 512 storage bits total. Each word
+has four 8-bit byte lanes.
+
+3. How many address bits are needed for 16 words?
+
+Four bits, because 2^4 = 16. They select addresses 0 through 15.
+
+4. How many byte-enable bits are needed for a 32-bit word?
+
+Four, one for each 8-bit byte lane.
+
+5. How are the byte-enable bits mapped to the data word in this design?
+
+`byte_en[0]` controls `din[7:0]`, `byte_en[1]` controls `din[15:8]`,
+`byte_en[2]` controls `din[23:16]`, and `byte_en[3]` controls `din[31:24]`.
+Thus bit 0 selects the least significant byte.
+
+6. Is the RAM read synchronous or asynchronous?
+
+It is synchronous. When `we` is low at a rising edge, the addressed memory word
+is sampled into `dout`. Changing `addr` alone does not immediately change
+`dout`.
+
+7. What selects a read versus a write in this interface?
+
+`we` selects the operation at the rising edge. If it is high, enabled byte
+lanes are written. If it is low, a synchronous read occurs and `byte_en` is
+ignored.
+
+8. What happens to `dout` during a write?
+
+It holds its previous value because the write branch does not assign to
+`dout`. This applies even when `byte_en` is zero.
+
+9. What happens when `we` is high and `byte_en` is `4'b0000`?
+
+No memory byte is updated. `dout` still holds its previous value because the
+port is in write mode.
+
+10. What happens to byte lanes whose enable bits are zero?
+
+Their old values are preserved. Only lanes with asserted enables take the
+corresponding byte from `din`.
+
+11. What happens when the RAM has not been initialized?
+
+Its words and initial `dout` are unknown (`X`) in four-state simulation. To
+check a partially written word, first initialize all its bytes with a full
+write; otherwise disabled bytes may remain unknown.
+
+RTL and memory behavior
+-----------------------
+
+12. What does `mem[addr][i*8 +: 8]` select?
+
+It selects an 8-bit part-select from the word at `addr`. The indexed part-select
+starts at bit `i*8` and extends upward for 8 bits, selecting byte lane `i`.
+
+13. Why is a loop used in the write logic?
+
+The loop applies the same conditional byte update to each lane. With the
+constant bound `WIDTH/8`, synthesis generally unrolls the loop into per-lane
+logic; it does not imply a multi-cycle operation.
+
+14. Why use nonblocking assignments for the memory write?
+
+The write is clocked sequential behavior. Nonblocking assignment schedules the
+update after the current simulation event and is the standard style for
+clocked state, helping avoid simulation-ordering problems.
+
+15. Can this interface read and write on the same edge?
+
+No. `we` chooses either the write operation or the read operation for the
+single port. Same-edge read/write collision behavior is therefore not
+applicable to this interface.
+
+16. What does the `WIDTH` parameter require for byte enables to work as
+intended?
+
+`WIDTH` should be a positive multiple of 8. The number of byte enables is
+`WIDTH/8`, and each enable controls exactly 8 bits. A width not divisible by 8
+would leave a partial byte that this mapping does not define.
+
+17. What parameter caveat applies to `DEPTH` and `$clog2(DEPTH)`?
+
+`DEPTH` should be at least 2 for the declaration `$clog2(DEPTH)-1:0` to have a
+valid address width. If depth is not a power of two, some binary address
+values are outside the memory range and need defined handling or a constraint.
+
+18. Why is the memory array not reset?
+
+The spec has no reset, and resetting every bit can prevent inference of FPGA
+block RAM or ASIC memory resources that lack a bulk-reset feature. The exact
+synthesis result depends on the target technology and tool.
+
+19. What hardware might synthesis infer?
+
+It may infer a memory block or macro with byte-write enables, or implement the
+storage from registers and logic. Memory size, target support for byte writes,
+read timing, reset behavior, and coding style affect the result.
+
+20. How would you add a separate read enable?
+
+Add a `re` input and perform a read only when `we` is low and `re` is high.
+When neither is asserted, the output would hold. Specify priority if `we` and
+`re` can both be high.
+
+Verification
+------------
+
+21. What role does a reference memory in the testbench play?
+
+It tracks expected memory contents independently of the DUT. On writes, the
+model updates only enabled byte lanes; on reads, it predicts the expected
+output for comparison with `dout`.
+
+22. Why should the testbench initialize a full word before testing partial
+writes?
+
+A partial write preserves disabled lanes. If those bytes were never written,
+they remain unknown in simulation, so the testbench cannot reliably check
+whether they were preserved.
+
+23. What is a useful test for each byte lane?
+
+Initialize a word to a known pattern with all enables set. Then write a
+visibly different value with only one enable asserted at a time and read the
+word back. Confirm the selected byte changed and all other bytes stayed the
+same.
+
+24. Which byte-enable masks should be tested?
+
+At minimum, test each one-hot mask (`0001`, `0010`, `0100`, `1000`), a combined
+mask such as `0101` or `1001`, all lanes enabled (`1111`), and no lanes enabled
+(`0000`). Check that unselected bytes retain their values.
+
+25. How should the testbench check that `we == 0` prevents a write?
+
+Give `din` a different value and assert byte enables while `we` is low. Then
+read the address and verify its previous contents remain unchanged.
+
+26. How should the testbench check `dout` holding during a write?
+
+First perform a read to establish known `dout`. Then perform a write and
+compare `dout` after the rising edge against its prior value. Repeat with
+`byte_en == 0000` if that case is part of the checks.
+
+27. How does the current testbench check partial writes?
+
+It initializes all locations, applies individual lane masks to selected
+addresses, then reads those words and compares the full 32-bit result against
+a reference model. This checks both changed and preserved bytes for those
+cases.
+
+28. What testbench control issue can happen if a `read` task does not set `we`
+low?
+
+The task may be called while `we` is high, so the clock edge performs a write,
+not a read. In the current testbench, the final `read(1)` occurs with `we` high
+and the previous byte enable and data still active. It checks output hold but
+also writes address 1. The stimulus should make that concurrent write
+intentional and update the reference model, or set `we` low for a pure read.
+
+29. Why should comparisons use case equality (`===`)?
+
+Case equality treats X and Z as values and always returns a known true or
+false. An unexpected unknown output compared with known expected data
+therefore produces a clear failure.
+
+30. What does a passing testbench prove, and what can it miss?
+
+It shows the tested cases passed under the testbench's assumptions. It does not
+prove all masks, addresses, or timing cases are correct, and an incorrect
+reference model can mask errors. Additional review, lint, synthesis checks,
+and broader tests provide more confidence.

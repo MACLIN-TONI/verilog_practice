@@ -1,0 +1,85 @@
+16 x 32 Single-Port Byte-Enabled RAM: RTL Specification
+=======================================================
+
+1. Module
+---------
+
+Module name: byte_enable_ram
+
+2. Configuration
+----------------
+
+- Depth: 16 words.
+- Word width: 32 bits (4 bytes per word).
+- Address width: 4 bits; valid addresses are 0 through 15.
+- One single port: each rising edge performs either a write or a read.
+- One shared clock.
+
+3. Interface
+------------
+
+Port     Direction  Width  Description
+-------  ---------  -----  -----------------------------------------------
+clk      input      1      Operations occur on the rising edge.
+we       input      1      1 = write selected bytes; 0 = synchronous read.
+addr     input      4      Word address, range 0 through 15.
+byte_en  input      4      Per-byte write mask, effective when we is 1.
+din      input      32     Data written to enabled byte lanes.
+dout     output     32     Registered data from a read.
+
+4. Byte lane mapping
+--------------------
+
+byte_en[0] controls din[7:0]   and mem[addr][7:0].
+byte_en[1] controls din[15:8]  and mem[addr][15:8].
+byte_en[2] controls din[23:16] and mem[addr][23:16].
+byte_en[3] controls din[31:24] and mem[addr][31:24].
+
+5. Clocked behavior
+-------------------
+
+At each rising edge of clk:
+
+- If we == 1, for each lane i in 0 through 3:
+  - If byte_en[i] == 1, write din[8*i +: 8] to the corresponding byte of
+    mem[addr].
+  - If byte_en[i] == 0, preserve that byte's previous value.
+  - If byte_en is 4'b0000, do not change the selected word.
+  - dout holds its previous value during the write operation.
+- If we == 0, read mem[addr] into dout. byte_en and din are ignored, and the
+  memory contents do not change.
+
+The read is synchronous: addr is sampled at the rising edge, and dout updates
+after that edge. Changes to inputs between rising edges do not directly update
+the memory or dout.
+
+6. Reset and initialization
+---------------------------
+
+- There is no reset input.
+- Do not initialize or clear the memory array in the RTL.
+- Initial memory contents and initial dout are unspecified (X in simulation).
+- Initialize a word with byte_en = 4'b1111 before expecting known values for
+  all its bytes. Partial writes to an uninitialized word leave other lanes
+  unspecified.
+
+7. Collision behavior
+---------------------
+
+Read and write cannot occur on the same edge because we selects exactly one
+operation. Same-edge read/write collision behavior is not applicable.
+
+8. Testbench requirements
+-------------------------
+
+- Initialize a word to a known 32-bit value using all four byte enables.
+- Write each byte lane individually and check that only that lane changes.
+- Exercise byte-enable masks 0000, 0001, 0010, 0100, 1000, 0101, 1010, and
+  1111 (binary), or an equivalent set covering individual and combined lanes.
+- Check writes to multiple addresses, including 0 and 15.
+- Confirm dout holds during writes, including a write with byte_en = 0000.
+- Change addr between rising edges and confirm dout changes only after a read
+  edge.
+- Confirm din and byte_en are ignored for memory updates when we == 0.
+- Use known initial contents before checking preserved or partially updated
+  bytes.

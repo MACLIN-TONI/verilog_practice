@@ -1,0 +1,28 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | addr =  0 | dout = ffffffff | exp_dout = ffffffff
+PASS | addr =  1 | dout = 00ffff00 | exp_dout = 00ffff00
+PASS | addr =  2 | dout = ff0000ff | exp_dout = ff0000ff
+PASS | addr =  3 | dout = f000000f | exp_dout = f000000f
+PASS | addr =  4 | dout = 0ffffff0 | exp_dout = 0ffffff0
+PASS | addr =  5 | dout = 11111111 | exp_dout = 11111111
+PASS | addr =  6 | dout = 00000001 | exp_dout = 00000001
+PASS | addr =  7 | dout = 99999999 | exp_dout = 99999999
+PASS | addr =  8 | dout = 77777777 | exp_dout = 77777777
+PASS | addr =  9 | dout = 12345678 | exp_dout = 12345678
+PASS | addr = 10 | dout = 2200220a | exp_dout = 2200220a
+PASS | addr = 11 | dout = 2200220b | exp_dout = 2200220b
+PASS | addr = 12 | dout = 2200220c | exp_dout = 2200220c
+PASS | addr = 13 | dout = 2200220d | exp_dout = 2200220d
+PASS | addr = 14 | dout = 2200220e | exp_dout = 2200220e
+PASS | addr = 15 | dout = 2200220f | exp_dout = 2200220f
+PASS | addr =  0 | dout = ffffff00 | exp_dout = ffffff00
+PASS | addr =  5 | dout = 1111ff11 | exp_dout = 1111ff11
+PASS | addr =  7 | dout = 99ff9999 | exp_dout = 99ff9999
+PASS | addr =  8 | dout = ff777777 | exp_dout = ff777777
+PASS | addr =  9 | dout = ff3456ff | exp_dout = ff3456ff
+PASS | addr =  9 | dout = ff3456ff | exp_dout = ff3456ff
+PASS | addr =  1 | dout = ff3456ff | exp_dout = ff3456ff
+SUMMARY
+PASS =          23
+FAIL =           0
+tb/tb_byte_enable_ram.v:148: $finish called at 686000 (1ps)
