@@ -1,0 +1,104 @@
+8 x 8 Synchronous FIFO: RTL Specification
+==========================================
+
+1. Module
+---------
+
+Module name: synchronous_fifo
+
+2. Configuration
+----------------
+
+- Capacity: 8 entries.
+- Data width: 8 bits per entry.
+- One shared clock for writes and reads.
+- FIFO order: first data accepted is the first data returned.
+- No fall-through: data written while empty is not read on that same edge.
+
+3. Interface
+------------
+
+Port    Direction  Width  Description
+------  ---------  -----  ----------------------------------------------
+clk     input      1      Clock; state changes occur on rising edge.
+rst     input      1      Synchronous active-high reset.
+wr_en   input      1      Request to push din into the FIFO.
+rd_en   input      1      Request to pop the oldest FIFO word.
+din     input      8      Data supplied for a push.
+dout    output     8      Registered data returned by an accepted pop.
+full    output     1      High when all 8 entries are occupied.
+empty   output     1      High when no entries are occupied.
+
+4. Reset behavior
+-----------------
+
+At a rising edge where rst == 1:
+
+- Reset the read pointer, write pointer, and occupancy count to zero.
+- Set dout to 8'h00.
+- Ignore wr_en and rd_en for that edge.
+- Do not reset or clear the storage array.
+- After reset, empty == 1 and full == 0.
+
+5. Request acceptance
+---------------------
+
+Acceptance is determined from the full and empty values immediately before the
+rising edge:
+
+- A push is accepted when wr_en == 1 and full == 0.
+- A pop is accepted when rd_en == 1 and empty == 0.
+- A request that is not accepted has no effect on the corresponding pointer
+  or memory operation.
+
+6. FIFO operations
+------------------
+
+On each rising edge when reset is not asserted:
+
+- Accepted push: write din to the location selected by the write pointer, then
+  advance the write pointer with wraparound.
+- Accepted pop: copy the oldest word selected by the read pointer to dout,
+  then advance the read pointer with wraparound.
+- If only a push is accepted, occupancy increases by one.
+- If only a pop is accepted, occupancy decreases by one.
+- If both are accepted, perform both operations and leave occupancy unchanged.
+- If neither is accepted, occupancy and pointers remain unchanged.
+- If no pop is accepted, dout holds its previous value.
+
+7. Boundary and simultaneous-request behavior
+----------------------------------------------
+
+- Empty, wr_en=1, rd_en=0: accept the push; FIFO becomes non-empty after the
+  edge.
+- Empty, wr_en=1, rd_en=1: accept the push and reject the pop using the
+  pre-edge empty flag. The new word remains in the FIFO for a later pop.
+- Full, wr_en=1, rd_en=0: reject the push; FIFO remains full.
+- Full, wr_en=1, rd_en=1: accept the pop and reject the push using the
+  pre-edge full flag. Occupancy decreases by one after the edge.
+- Neither request accepted: storage, pointers, and occupancy do not change;
+  dout holds unless reset is asserted.
+
+8. Status flags and pointers
+----------------------------
+
+- empty is high exactly when occupancy is 0.
+- full is high exactly when occupancy is 8.
+- The occupancy count represents values 0 through 8 and therefore needs 4 bits.
+- The read and write pointers select entries 0 through 7 and wrap from 7 to 0.
+- Status flags reflect the updated occupancy after a rising edge.
+
+9. Testbench requirements
+-------------------------
+
+- Check reset clears pointers/count/output and produces empty=1, full=0.
+- Check a pop while empty is rejected and does not change dout.
+- Push one or more words and pop them in order.
+- Fill all 8 entries and check full; verify an extra push is rejected.
+- Drain all entries and check empty; verify an extra pop is rejected.
+- Exercise simultaneous push/pop at an intermediate occupancy and check that
+  occupancy is unchanged and data ordering is preserved.
+- Check simultaneous push/pop while empty and while full according to the
+  boundary rules above.
+- Exercise pointer wraparound with enough pushes and pops to cross entry 7.
+- Check dout holds when no pop is accepted.

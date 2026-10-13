@@ -1,0 +1,32 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 1
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 1
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 1 | empty = 0
+PASS | dout = ff | exp_dout = ff | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 0 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 1 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 1 | empty = 0
+PASS | dout = 00 | exp_dout = 00 | full = 1 | empty = 0
+PASS | dout = 0f | exp_dout = 0f | full = 0 | empty = 0
+PASS | dout = f0 | exp_dout = f0 | full = 0 | empty = 0
+PASS | dout = 81 | exp_dout = 81 | full = 0 | empty = 0
+PASS | dout = 7e | exp_dout = 7e | full = 0 | empty = 0
+PASS | dout = 99 | exp_dout = 99 | full = 0 | empty = 0
+PASS | dout = 66 | exp_dout = 66 | full = 0 | empty = 0
+PASS | dout = 66 | exp_dout = 66 | full = 0 | empty = 0
+PASS | dout = 66 | exp_dout = 66 | full = 0 | empty = 1
+PASS | dout = 66 | exp_dout = 66 | full = 0 | empty = 0
+PASS | dout = ff | exp_dout = ff | full = 0 | empty = 0
+PASS | dout = 22 | exp_dout = 22 | full = 0 | empty = 1
+SUMMARY
+PASS =          27
+FAIL =           0
+tb/tb_synchronous_fifo.v:119: $finish called at 316000 (1ps)

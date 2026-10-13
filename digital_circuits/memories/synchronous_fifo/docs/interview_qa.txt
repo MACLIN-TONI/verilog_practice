@@ -1,0 +1,102 @@
+SYNCHRONOUS FIFO — INTERVIEW QUESTIONS AND ANSWERS
+
+This Q&A follows the synchronous FIFO specification in this folder: an 8-word by 8-bit FIFO with synchronous active-high reset. Parameterization questions also point out what must change if DEPTH or WIDTH is configured differently.
+
+1. What is a FIFO?
+A FIFO (first in, first out) is a queue: data is removed in the same order it was accepted. The oldest stored word is read first.
+
+2. What are this design's default capacity and word width?
+It stores 8 words, each 8 bits wide, for a total storage capacity of 64 bits.
+
+3. What do the read and write pointers do?
+The write pointer selects the location for the next accepted push. The read pointer selects the oldest word for the next accepted pop. Each pointer advances only when its corresponding operation is accepted.
+
+4. What do `full` and `empty` mean?
+`empty` is asserted when the occupancy count is zero. `full` is asserted when occupancy equals the FIFO depth. They describe the current state, before the next active clock edge.
+
+5. When is a push accepted?
+A push is accepted when `wr_en` is high and the FIFO is not full at the sampling edge. The input word is written at the write pointer, which then advances.
+
+6. When is a pop accepted?
+A pop is accepted when `rd_en` is high and the FIFO is not empty at the sampling edge. The oldest word is presented at `dout`, and the read pointer advances.
+
+7. What happens when reset is asserted?
+At the next rising clock edge, synchronous active-high reset clears the pointers and occupancy count and sets `dout` to zero. The FIFO becomes empty and not full. Requests are ignored on that edge.
+
+8. Does reset need to clear every memory location?
+No. Resetting pointers and occupancy makes all old entries logically invalid. The memory contents may remain unknown or stale; they must not be treated as valid while the FIFO is empty.
+
+9. What happens if a pop is requested while empty?
+The pop is rejected: the read pointer and occupancy do not change, and `dout` holds its previous value. The FIFO does not return a valid word.
+
+10. What happens if a push is requested while full?
+The push is rejected: the write pointer and occupancy do not change, and the stored words are preserved.
+
+11. What happens when push and pop are both requested at an intermediate occupancy?
+Both are accepted. The old head word is read, the new input word is written at the tail, both pointers advance, and occupancy stays the same.
+
+12. What happens when push and pop are both requested while empty?
+Acceptance is determined from the pre-edge flags. The push is accepted and the pop is rejected because the FIFO was empty before the edge. Occupancy increases by one, and `dout` holds. This behavior has no fall-through or empty bypass.
+
+13. What happens when push and pop are both requested while full?
+The pop is accepted and the push is rejected because the FIFO was full before the edge. Occupancy decreases by one, the read pointer advances, and `dout` receives the old head word.
+
+14. Why are the full and empty cases for simultaneous requests important?
+They establish unambiguous boundary behavior. The design uses the flags from before the edge to decide which operations are accepted, avoiding accidental acceptance of a push based on a pop happening on that same edge.
+
+15. What is the read latency in this design?
+A valid pop is sampled on a rising edge, and the registered `dout` updates after that edge with the popped word. This is a synchronous read interface.
+
+16. What should `dout` do when no pop is accepted?
+It should hold its previous value, except that reset sets it to zero. A rejected pop must not advance the read pointer or replace `dout` with invalid data.
+
+17. How many bits are needed for the read and write pointers at depth 8?
+Three bits are enough to address 8 entries, with pointer values 0 through 7.
+
+18. How many bits are needed for the occupancy counter at depth 8?
+Four bits are needed to represent every occupancy from 0 through 8. A 3-bit counter cannot represent 8.
+
+19. How should pointers wrap at the end of the memory?
+At depth 8, advancing from address 7 wraps to address 0. For a power-of-two depth, a 3-bit pointer naturally wraps. For a non-power-of-two depth, RTL must explicitly wrap at `DEPTH-1` so it never addresses an unused location.
+
+20. Why does occupancy remain unchanged when both operations are accepted?
+One word enters and one word leaves on the same edge, so the net change is zero. Both pointers still advance.
+
+21. What data does `dout` receive during an accepted simultaneous push and pop at intermediate occupancy?
+It receives the old word at the read pointer. The new `din` is written at the write pointer. With a valid FIFO state, the old head and the new tail are distinct logical queue entries.
+
+22. What is the difference between a FIFO and a stack?
+A FIFO removes the oldest item first. A stack uses last in, first out (LIFO) ordering and removes the most recently added item first.
+
+23. Why track occupancy instead of deriving full and empty from pointers alone?
+Occupancy directly represents the number of stored words and makes the boundary comparisons straightforward. Pointer-only schemes need an extra wrap or phase bit to distinguish full from empty when the pointers match.
+
+24. What is the purpose of the memory array?
+It stores the FIFO words. The pointers identify where to write the next accepted input and which stored word is the oldest one to pop.
+
+25. What parameter widths should a reusable FIFO use?
+Pointer width should be based on `DEPTH` (typically `max(1, $clog2(DEPTH))`), and occupancy width should represent 0 through `DEPTH` (typically `$clog2(DEPTH+1)`). Width and depth are separate parameters and should not be confused.
+
+26. What parameterization issue should be checked in this RTL?
+The pointer and occupancy widths should derive from `DEPTH`, not `WIDTH`. A design that derives them from `WIDTH` may work for the default 8-by-8 configuration but fail when data width and depth differ. Depth 1 also needs care because `$clog2(1)` is zero.
+
+27. What is a potential issue with non-power-of-two depths?
+A binary pointer can enter unused addresses unless it explicitly wraps at `DEPTH-1`. The occupancy counter must also be wide enough to represent `DEPTH`.
+
+28. Why might the memory not infer a block RAM in every tool or device?
+Memory inference depends on the coding style, target device, and supported read/write behavior. The RTL describes behavior; synthesis reports should be checked to see whether the intended memory resource was inferred.
+
+29. How should a testbench decide whether a requested pop was accepted?
+It should use the pre-edge state: `rd_en && !empty`. Likewise, an accepted push is `wr_en && !full`, using the flags before that edge. It should update its reference queue only for accepted operations.
+
+30. What should a FIFO reference model check?
+It should check accepted pushes and pops, output data ordering, occupancy-derived `full` and `empty`, pointer wraparound effects, and `dout` holding when no pop is accepted. It should also cover simultaneous requests at empty, full, and intermediate occupancy.
+
+31. Which boundary and concurrency tests are especially useful?
+Test reset; pop while empty; push while full; fill and drain the FIFO; simultaneous push/pop at intermediate occupancy; simultaneous requests while empty and while full; and pointer wraparound after enough pushes and pops.
+
+32. Why should a testbench compare unknown values carefully?
+Verilog simulation has four logic values: 0, 1, X (unknown), and Z (high impedance). A comparison using case equality (`===`) can detect an unexpected X in `dout`; ordinary equality (`==`) can itself evaluate to X.
+
+33. Does a passing simulation prove the FIFO is correct?
+No. It shows the design passed the tested scenarios. Confidence also depends on a correct reference model, sufficient boundary and concurrency coverage, parameter checks, and—when relevant—synthesis and timing review.
