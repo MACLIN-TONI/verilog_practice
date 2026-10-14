@@ -1,0 +1,35 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+ERROR | memory empty
+ERROR | memory empty
+WRITE | data = ff
+WRITE | data = 00
+WRITE | data = 0f
+WRITE | data = f0
+WRITE | data = 81
+WRITE | data = 7e
+WRITE | data = 99
+WRITE | data = aa
+ERROR | memory full | cannot write data = 66
+ERROR | memory full | cannot write data = 66
+ERROR | memory full | cannot write data = 66
+ERROR | memory full | cannot write data = 66
+ERROR | memory full | cannot write data = 66
+PASS | rdata = ff | exp_data = ff
+PASS | rdata = 00 | exp_data = 00
+PASS | rdata = 0f | exp_data = 0f
+PASS | rdata = f0 | exp_data = f0
+PASS | rdata = 81 | exp_data = 81
+PASS | rdata = 7e | exp_data = 7e
+PASS | rdata = 99 | exp_data = 99
+PASS | rdata = aa | exp_data = aa
+ERROR | memory empty
+ERROR | memory empty
+ERROR | memory empty
+WRITE | data = 12
+PASS | rdata = 12 | exp_data = 12
+ERROR | memory empty
+ERROR | memory empty
+SUMMARY
+PASS =           9
+FAIL =           0
+tb/tb_asynchronous_fifo.v:167: $finish called at 560000 (1ps)

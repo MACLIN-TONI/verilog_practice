@@ -1,0 +1,132 @@
+8 x 8 Asynchronous FIFO: RTL Specification
+===========================================
+
+1. Module and configuration
+---------------------------
+Module name: asynchronous_fifo
+Default data width: 8 bits
+Default depth: 8 words
+The write and read clocks are independent and may have unrelated frequencies
+and phases. The FIFO preserves the order of accepted writes.
+
+2. Interface
+------------
+Signal   Direction  Width  Description
+------   ---------  -----  -----------------------------------------------
+wclk     input      1      Write-domain clock; write-side state updates on its
+                           rising edge.
+rclk     input      1      Read-domain clock; read-side state updates on its
+                           rising edge.
+wrst_n   input      1      Active-low reset for write-domain state.
+rrst_n   input      1      Active-low reset for read-domain state.
+winc     input      1      Write request; accepted when winc && !wfull.
+rinc     input      1      Read request; accepted when rinc && !rempty.
+wdata    input      8      Data word to write.
+rdata    output     8      Data at the current read pointer address. Valid only
+                           when rempty is low.
+wfull    output     1      Write-domain flag; asserted when no further write
+                           can be accepted.
+rempty   output     1      Read-domain flag; asserted when no data can be read.
+
+3. Pointer and memory architecture
+----------------------------------
+- Use a dual-port storage array with 8 entries of 8 bits each.
+- Maintain a 4-bit binary write pointer in the write-clock domain and a
+  4-bit binary read pointer in the read-clock domain. The low 3 bits address
+  memory; the extra most-significant bit distinguishes pointer wraparound.
+- Convert each binary pointer to a 4-bit Gray pointer for clock-domain
+  crossing. Gray conversion is binary XOR binary shifted right by one.
+- Pass the write Gray pointer into the read-clock domain through a two-flop
+  synchronizer. Pass the read Gray pointer into the write-clock domain through
+  another two-flop synchronizer.
+- Keep each synchronizer's stages in its destination clock domain. Do not use
+  a synchronized pointer in the source clock domain.
+- The Gray pointer bus must be implemented and constrained as a CDC path in a
+  real target device; RTL simulation alone cannot validate physical skew or
+  metastability behavior.
+
+4. Write-side behavior
+----------------------
+- Write-side control is clocked by wclk.
+- When wrst_n is asserted low, reset the binary and Gray write pointers to zero
+  and clear wfull.
+- On a rising wclk edge, accept a write only when winc is high and the current
+  wfull flag is low.
+- An accepted write stores wdata at the current write address and advances
+  the binary pointer by one, wrapping naturally through the 8-entry address
+  space. Update the Gray pointer from the next binary pointer.
+- When a write is not accepted, do not write memory or advance the write
+  pointer.
+- Compute the next full condition using the next write Gray pointer and the
+  synchronized read Gray pointer. For depth 8, full is detected when the next
+  write Gray pointer equals the synchronized read Gray pointer with its upper
+  two bits inverted and its lower bits unchanged. Register wfull in the
+  write-clock domain.
+
+5. Read-side behavior
+---------------------
+- Read-side control is clocked by rclk.
+- When rrst_n is asserted low, reset the binary and Gray read pointers to zero
+  and set rempty.
+- On a rising rclk edge, accept a read only when rinc is high and the current
+  rempty flag is low.
+- An accepted read advances the binary read pointer by one. Update the Gray
+  pointer from the next binary pointer.
+- When a read is not accepted, do not advance the read pointer.
+- Compute the next empty condition by comparing the next read Gray pointer
+  with the synchronized write Gray pointer. Register rempty in the read-clock
+  domain.
+- rdata is the asynchronous read value at the current read address. It is
+  meaningful only when rempty is low. A read request while empty is rejected;
+  no fall-through behavior is provided.
+
+6. Reset behavior
+-----------------
+- wrst_n resets write-domain pointers, synchronizer state, and wfull.
+- rrst_n resets read-domain pointers, synchronizer state, and rempty.
+- For the learning testbench, assert both resets together and hold them active
+  across rising edges of both clocks before releasing them.
+- In a physical design, reset deassertion should be handled safely in each
+  clock domain, typically by synchronizing release separately to wclk and rclk.
+- Reset does not need to clear the storage array; empty status makes old data
+  invalid.
+
+7. Boundary rules
+-----------------
+- If winc is high while wfull is high, reject the write and preserve the
+  current write pointer and memory contents.
+- If rinc is high while rempty is high, reject the read and preserve the
+  current read pointer.
+- wfull is generated and consumed in the write-clock domain; rempty is
+  generated and consumed in the read-clock domain.
+- Due to pointer synchronization latency, flags may conservatively remain
+  asserted briefly after space or data becomes available. They must not permit
+  overflow or underflow.
+
+8. Testbench requirements
+-------------------------
+- Generate independent wclk and rclk periods and vary their phase relationship.
+- Assert and release both resets while checking wfull=0 and rempty=1 after
+  reset has propagated through the domains.
+- Check accepted writes and reads against a reference queue; rejected requests
+  must not change the queue.
+- Check FIFO ordering over writes and reads at different clock rates.
+- Exercise full and empty conditions, rejected write/read requests, and
+  pointer wraparound.
+- Test continuous writes, continuous reads, and overlapping read/write traffic.
+- Check that no accepted read occurs while empty and no accepted write occurs
+  while full.
+- Allow for synchronizer latency when checking flags; do not expect a remote
+  pointer change to be visible in the other domain immediately.
+
+9. Design constraints and scope
+-------------------------------
+- The default specification is depth 8, a power-of-two depth. Supporting other
+  depths requires reviewing pointer widths, address wraparound, and full
+  detection.
+- The storage data itself is not transferred through synchronizer flops. The
+  pointers and flags coordinate when each memory location is safe to write or
+  read.
+- This RTL exercise teaches the standard Gray-pointer asynchronous FIFO
+  architecture. A production implementation also requires CDC review,
+  synthesis/resource review, and device-appropriate timing constraints.
