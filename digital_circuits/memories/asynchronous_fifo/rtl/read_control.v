@@ -9,16 +9,9 @@ module read_control (
 );
 
     reg [3:0] rptr;
-    reg [3:0] wptr;
 
     assign raddr = rptr[2:0];
 
-    always @(wgptr) begin
-        wptr[3] = wgptr[3];
-        wptr[2] = wptr[3] ^ wgptr[2];
-        wptr[1] = wptr[2] ^ wgptr[1];
-        wptr[0] = wptr[1] ^ wgptr[0];
-    end
 
     always @(rptr) begin
         rgptr[3] = rptr[3];
@@ -41,6 +34,6 @@ module read_control (
         end
     end
 
-    assign rempty = (wptr === rptr);
+    assign rempty = (wgptr === rgptr);
 
 endmodule
