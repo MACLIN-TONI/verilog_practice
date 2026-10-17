@@ -10,7 +10,9 @@ module asynchronous_fifo (
     output wfull,
     output rempty
 );
-    reg full,empty;
+    wire full,empty;
+    
+    wire [3:0] wp,rp,wgp,wgp2,rgp,rgp2;
 
     reg [3:0] wptr;
     reg [3:0] rptr;
@@ -24,9 +26,9 @@ module asynchronous_fifo (
         .wclk(wclk),
         .wrst_n(wrst_n),
         .winc(winc),
-        .rgptr(rgptr2),
-        .wgptr(wgptr),
-        .waddr(wptr[2:0]),
+        .rgptr(rgp2),
+        .wgptr(wgp),
+        .waddr(wp[2:0]),
         .wfull(full)
     );
 
@@ -34,11 +36,22 @@ module asynchronous_fifo (
         .rclk(rclk),
         .rrst_n(rrst_n),
         .rinc(rinc),
-        .wgptr(wgptr2),
-        .rgptr(rgptr),
-        .raddr(rptr[2:0]),
+        .wgptr(wgp2),
+        .rgptr(rgp),
+        .raddr(rp[2:0]),
         .rempty(empty)
     );
+    
+    assign rgp2 = rgptr2;
+    assign wgp2 = wgptr2;
+    
+    always @(*) begin
+        wptr = wp;
+        rptr = rp;
+        wgptr = wgp;
+        rgptr = rgp;
+
+    end
 
     always @(posedge wclk) begin
         if(!wrst_n) begin
