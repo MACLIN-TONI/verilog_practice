@@ -14,12 +14,23 @@ module s_0110_non_overlapping (
 
     reg [2:0] state, next;
 
-    always @(posedge clk, negedge areset_n) begin
+    reg ena1,ena2;
+    wire syn_en;
+
+
+    always @(posedge clk) begin
+        ena1 <= en;
+        ena2 <= ena1; 
+    end
+
+    assign syn_en = ena1 & ~ena2;
+
+    always @(posedge clk, negedge areset_n, posedge syn_en) begin
         if(~areset_n) begin
             state <= a;
         end
         else begin
-            if(en) begin
+            if(syn_en) begin
                 state <= next;
             end
             else begin
