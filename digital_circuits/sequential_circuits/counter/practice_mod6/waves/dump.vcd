@@ -1,0 +1,96 @@
+$date
+	Tue Oct 20 08:54:17 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_practice_mod6 $end
+$var wire 3 ! out [2:0] $end
+$var reg 1 " areset_n $end
+$var reg 1 # clk $end
+$scope module dut $end
+$var wire 1 " areset_n $end
+$var wire 1 # clk $end
+$var wire 3 $ out [2:0] $end
+$var reg 1 % a $end
+$var reg 1 & b $end
+$var reg 1 ' c $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+0'
+0&
+0%
+b0 $
+0#
+0"
+b0 !
+$end
+#10000
+1#
+#12000
+1"
+#20000
+0#
+#30000
+b1 !
+b1 $
+1'
+1#
+#40000
+0#
+#50000
+0'
+b10 !
+b10 $
+1&
+1#
+#60000
+0#
+#70000
+b11 !
+b11 $
+1'
+1#
+#80000
+0#
+#90000
+0'
+0&
+b100 !
+b100 $
+1%
+1#
+#100000
+0#
+#110000
+b101 !
+b101 $
+1'
+1#
+#120000
+0#
+#130000
+0'
+b0 !
+b0 $
+0%
+1#
+#140000
+0#
+#150000
+b1 !
+b1 $
+1'
+1#
+#160000
+0#
+#162000
