@@ -1,0 +1,198 @@
+ASYNCHRONOUS FIFO — INTERVIEW QUESTIONS AND ANSWERS
+
+These answers describe the current 8-bit-wide, 8-entry asynchronous FIFO RTL in
+this folder. The RTL is split across asynchronous_fifo.v, write_control.v, and
+read_control.v. Where the written spec and RTL differ, the answer calls that
+out so the implementation can be discussed accurately.
+
+BASICS
+------
+
+1. What is an asynchronous FIFO?
+It is a first-in, first-out buffer that transfers data between two independent
+clock domains. The write side uses wclk and the read side uses rclk. The clocks
+may have different frequencies and unrelated phases.
+
+2. What does FIFO ordering mean?
+The first accepted write is the first word returned by an accepted read. The
+read and write pointers move independently, while the FIFO control prevents
+reading unavailable data or overwriting unread data.
+
+3. What are this design's default width and depth?
+The memory has 8 entries, each 8 bits wide. Three pointer bits address entries
+0 through 7; a fourth pointer bit tracks wraparound.
+
+4. Why does an asynchronous FIFO need two pointers?
+Writes and reads happen on different clocks, so each side needs its own pointer
+updated only by its local clock. The write side owns the write pointer, and the
+read side owns the read pointer.
+
+5. What are winc and rinc?
+winc requests a write, which is accepted when winc is high and wfull is low.
+rinc requests a read, which is accepted when rinc is high and rempty is low.
+A rejected request must not advance its corresponding pointer.
+
+CLOCK-DOMAIN CROSSING
+---------------------
+
+6. What is metastability?
+A flip-flop can temporarily enter an indeterminate analog state when its input
+changes near a clock edge. A receiving circuit may then observe the value late
+or unpredictably. Synchronizer stages reduce the chance that metastability
+propagates into the rest of the destination logic; they cannot eliminate the
+risk entirely.
+
+7. What does a two-flop synchronizer do here?
+It samples a Gray-coded pointer through two registers clocked by the destination
+clock. The first stage may become metastable; the second stage gives it more
+time to settle before the pointer is used by local control logic.
+
+8. Why synchronize Gray pointers instead of binary pointers?
+A binary increment can change multiple bits at once. If the destination samples
+during that transition, it could observe a combination that was never a valid
+source pointer. Consecutive Gray values differ by one bit, reducing this risk.
+
+9. Why are the pointers synchronized instead of the data bus?
+The dual-port memory holds the data. Pointer synchronization communicates
+which memory locations contain valid data or available space. Independently
+synchronizing each data bit could mix bits from different words and does not
+preserve a coherent multi-bit transfer.
+
+10. Which way do the pointer crossings go?
+The Gray write pointer crosses into the read-clock domain through wgptr1 and
+wgptr2. The Gray read pointer crosses into the write-clock domain through
+rgptr1 and rgptr2. Each synchronizer is clocked by the domain receiving that
+pointer.
+
+POINTERS AND FLAGS
+------------------
+
+11. What is Gray code, and how is it calculated?
+For binary value b, Gray code is b XOR (b shifted right by one). In this RTL,
+the Gray bits are formed from adjacent binary pointer bits. For example,
+binary 0011 maps to Gray 0010.
+
+12. Why is each pointer 4 bits wide for an 8-entry FIFO?
+Three low bits select one of eight memory entries. The extra high bit records
+whether the pointer has wrapped around, which lets the control distinguish
+empty from full when the low address bits match.
+
+13. How is empty detected?
+The read side compares its current Gray read pointer with the synchronized
+Gray write pointer. Equality means there are no unread entries, so rempty is
+asserted.
+
+14. How is full detected for this depth-8 design?
+The write side compares its current Gray write pointer against the synchronized
+Gray read pointer with the upper two Gray bits inverted and the lower bits
+unchanged. This represents the read pointer one full buffer lap behind the
+write pointer.
+
+15. Why invert two Gray-pointer bits for the full comparison?
+With an extra wrap bit, the full pointer has advanced one buffer length beyond
+the read pointer. In Gray-code form for a power-of-two depth, that wrap
+relationship is detected by inverting the two most significant bits of the
+synchronized read Gray pointer before comparison.
+
+16. Which clock domain owns each status flag?
+wfull is generated from write-domain state and is used by write-side logic
+clocked by wclk. rempty is generated from read-domain state and is used by
+read-side logic clocked by rclk. Do not use either flag as a globally
+synchronous signal in the opposite domain without a CDC method.
+
+17. Can a flag update immediately when the opposite side makes progress?
+No. The remote pointer must pass through two synchronizer stages, so the local
+flag may lag by multiple destination-clock edges. This conservative delay is
+expected and helps prevent overflow and underflow.
+
+18. Why are the pointers four bits but memory addresses three bits?
+The low three bits index the eight memory words. The fourth bit is not part of
+the physical word address; it distinguishes pointer wraparound for full/empty
+tracking.
+
+RESET AND DATA TIMING
+---------------------
+
+19. What do wrst_n and rrst_n mean?
+They are active-low resets for the write and read domains, respectively. In
+the current RTL, each control block and pointer synchronizer checks its reset
+on its own clock edge, so reset assertion/deassertion is sampled
+synchronously by those blocks despite the active-low polarity.
+
+20. Why should reset release be handled carefully in hardware?
+Releasing reset near a clock edge can violate flip-flop recovery/removal timing.
+A practical design commonly synchronizes reset deassertion separately in each
+clock domain. The two local resets should also establish a consistent empty
+FIFO state before normal traffic begins.
+
+21. Does reset clear the memory array?
+No. Resetting the pointers and empty status makes old memory contents invalid.
+The memory need not be reset, which avoids unnecessary hardware and often
+supports better memory inference.
+
+22. When does the current RTL update rdata?
+The current top-level RTL registers rdata on a rising rclk edge when rinc is
+high and rempty is low. It captures the word at the current read address. If
+no read is accepted, rdata holds its previous value.
+
+23. Does rdata timing match the written spec exactly?
+No. The current spec describes rdata as an asynchronous read value at the
+current read address, while the RTL registers rdata on an accepted read edge.
+For accurate verification and interview discussion, choose one behavior and
+make the spec and testbench agree with the intended interface.
+
+RTL AND VERIFICATION
+--------------------
+
+24. What does the dual-port memory do?
+It stores the 8-bit words. The write port is accessed using the write address
+under wclk; the read port is accessed using the read address under rclk.
+Pointer and flag logic controls whether either side is allowed to access the
+next location.
+
+25. What happens on a write request while full?
+The write is rejected. The memory is written only when winc is high and wfull
+is low, and the write pointer advances under the same condition.
+
+26. What happens on a read request while empty?
+The read is rejected. The read pointer does not advance, and the current RTL
+does not update rdata on that edge.
+
+27. How should a reference model check the FIFO?
+Maintain a software queue. Add wdata only when a write is accepted and remove
+and compare the oldest item only when a read is accepted. Do not update the
+queue for requests rejected by full or empty. Allow for CDC synchronizer delay
+when checking the remote-side flags.
+
+28. Which tests are essential?
+Check reset, empty reads, writes through full, rejected writes while full,
+reads through empty, rejected reads while empty, FIFO ordering, pointer
+wraparound, and overlapping read/write activity. Use independent clock
+periods and vary their relative phase.
+
+29. What is a limitation of the current testbench's error accounting?
+The current testbench prints an error when it attempts a write while full or a
+read while empty, but those rejected attempts do not increment FAIL. A run can
+therefore print boundary errors while still reporting zero failures. A stronger
+self-checking testbench should explicitly assert the expected flags and verify
+that rejected requests leave the model and pointers' observable behavior
+unchanged.
+
+30. Why should this FIFO first be kept at depth 8?
+The current pointer widths, address slices, and full-comparison logic are
+written specifically for a depth of 8. Supporting other depths requires
+parameterizing pointer widths and reviewing wraparound and full detection;
+non-power-of-two depths need additional care.
+
+31. Does a passing RTL simulation prove the CDC implementation is safe?
+No. RTL simulation checks functional behavior under modeled clocks and logic
+values, but it does not reproduce physical metastability, routing skew, or
+recovery/removal violations. A real implementation also needs CDC analysis,
+appropriate synchronizer recognition/placement, and device-specific timing
+constraints for the Gray-pointer crossings.
+
+32. Why use separate read and write control modules?
+They make clock-domain ownership explicit. The write controller updates write
+state using wclk; the read controller updates read state using rclk. This
+separation makes the design easier to understand and helps avoid accidentally
+updating state from the wrong clock domain.
