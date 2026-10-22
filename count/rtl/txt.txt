@@ -1,0 +1,122 @@
+#########SR
+
+SR Cff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .s(),
+        .r(),
+        .q(C),
+        .qb(Cb)
+        
+    );
+
+    SR Bff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .s(),
+        .r(),
+        .q(B),
+        .qb(Bb)
+        
+    );
+
+    SR Aff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .s(),
+        .r(),
+        .q(A),
+        .qb(Ab)
+        
+    );
+
+#################### JK
+
+JK Cff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .j(),
+        .k(),
+        .q(C),
+        .qb(Cb)
+        
+    );
+
+    JK Bff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .j(),
+        .k(),
+        .q(B),
+        .qb(Bb)
+        
+    );
+
+    JK Aff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .j(),
+        .k(),
+        .q(A),
+        .qb(Ab)
+        
+    );
+
+
+##############################
+
+D Cff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .d(),
+        .q(C)        
+    );
+
+    D Bff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .d(),
+        .q(B)        
+    );
+
+    D Aff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .d(),
+        .q(A)        
+    );
+
+##############################
+
+T Cff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .t(),
+        .q(C)        
+    );
+
+    T Bff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .t(),
+        .q(B)        
+    );
+
+    T Aff(
+        .clk(),
+        .en(1),
+        .areset_n(areset_n),
+        .t(),
+        .q(A)        
+    );

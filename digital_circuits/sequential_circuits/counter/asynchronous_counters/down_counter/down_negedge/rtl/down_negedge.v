@@ -6,6 +6,9 @@ module down_negedge (
 );
 
     wire [2:0] w;
+    wire [2:0] wb;
+
+    assign wb = ~w;
     D_neg u2(
         .clk(clk),
         .en(en),

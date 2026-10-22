@@ -6,6 +6,8 @@ module up_posedge(
 );
 
     wire [2:0] w;
+    wire [2:0] wb;
+    assign wb = ~w;
 
     D u2(
         .clk(clk),
