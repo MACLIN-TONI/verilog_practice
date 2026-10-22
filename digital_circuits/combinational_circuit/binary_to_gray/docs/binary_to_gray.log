@@ -1,0 +1,12 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | binary = 1111 | gray = 1000 | exp = 1000
+PASS | binary = 0000 | gray = 0000 | exp = 0000
+PASS | binary = 1010 | gray = 1111 | exp = 1111
+PASS | binary = 1100 | gray = 1010 | exp = 1010
+PASS | binary = 0011 | gray = 0010 | exp = 0010
+PASS | binary = 1001 | gray = 1101 | exp = 1101
+PASS | binary = 0110 | gray = 0101 | exp = 0101
+SUMMARY
+PASS =           7
+FAIL =           0
+tb/tb_binary_to_gray.v:61: $finish called at 157000 (1ps)

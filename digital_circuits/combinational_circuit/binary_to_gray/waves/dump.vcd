@@ -1,0 +1,109 @@
+$date
+	Thu Oct 22 06:14:23 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_binary_to_gray $end
+$var wire 4 ! out [3:0] $end
+$var parameter 32 " BITS $end
+$var reg 4 # in [3:0] $end
+$var integer 32 $ FAIL [31:0] $end
+$var integer 32 % PASS [31:0] $end
+$scope module dut $end
+$var wire 4 & in [3:0] $end
+$var parameter 32 ' BITS $end
+$var reg 4 ( out [3:0] $end
+$scope begin $ivl_for_loop0 $end
+$var integer 32 ) i [31:0] $end
+$upscope $end
+$upscope $end
+$scope task check $end
+$var reg 4 * exp [3:0] $end
+$var reg 4 + t_in [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b100 '
+b100 "
+$end
+#0
+$dumpvars
+b1111 +
+b1000 *
+b11111111111111111111111111111111 )
+b1000 (
+b1111 &
+b0 %
+b0 $
+b1111 #
+b1000 !
+$end
+#1000
+b1 %
+#21000
+b11111111111111111111111111111111 )
+b0 !
+b0 (
+b0 #
+b0 &
+b0 *
+b0 +
+#22000
+b10 %
+#42000
+b11111111111111111111111111111111 )
+b1111 !
+b1111 (
+b1010 #
+b1010 &
+b1111 *
+b1010 +
+#43000
+b11 %
+#63000
+b1010 !
+b1010 (
+b11111111111111111111111111111111 )
+b1100 #
+b1100 &
+b1010 *
+b1100 +
+#64000
+b100 %
+#84000
+b11111111111111111111111111111111 )
+b10 !
+b10 (
+b11 #
+b11 &
+b10 *
+b11 +
+#85000
+b101 %
+#105000
+b11111111111111111111111111111111 )
+b1101 !
+b1101 (
+b1001 #
+b1001 &
+b1101 *
+b1001 +
+#106000
+b110 %
+#126000
+b11111111111111111111111111111111 )
+b101 !
+b101 (
+b110 #
+b110 &
+b101 *
+b110 +
+#127000
+b111 %
+#157000
