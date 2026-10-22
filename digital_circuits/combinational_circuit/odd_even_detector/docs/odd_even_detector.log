@@ -1,0 +1,13 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | in = 0010 ( 2) | odd = 0 | even = 1
+PASS | in = 1001 ( 9) | odd = 1 | even = 0
+PASS | in = 1000 ( 8) | odd = 0 | even = 1
+PASS | in = 1111 (15) | odd = 1 | even = 0
+PASS | in = 0101 ( 5) | odd = 1 | even = 0
+PASS | in = 1010 (10) | odd = 0 | even = 1
+PASS | in = 1100 (12) | odd = 0 | even = 1
+PASS | in = 1101 (13) | odd = 1 | even = 0
+SUMMARY
+PASS =           8
+FAIL =           0
+tb/tb_odd_even_detector.v:62: $finish called at 168000 (1ps)

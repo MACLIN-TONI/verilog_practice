@@ -1,0 +1,111 @@
+$date
+	Thu Oct 22 10:09:54 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_odd_even_detector $end
+$var wire 1 ! odd $end
+$var wire 1 " even $end
+$var parameter 32 # BITS $end
+$var reg 4 $ in [3:0] $end
+$var integer 32 % FAIL [31:0] $end
+$var integer 32 & PASS [31:0] $end
+$scope module dut $end
+$var wire 1 " even $end
+$var wire 4 ' in [3:0] $end
+$var wire 1 ! odd $end
+$var parameter 32 ( BITS $end
+$upscope $end
+$scope task check $end
+$var reg 1 ) exp_even $end
+$var reg 1 * exp_odd $end
+$var reg 4 + t_in [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b100 (
+b100 #
+$end
+#0
+$dumpvars
+b10 +
+0*
+1)
+b10 '
+b0 &
+b0 %
+b10 $
+1"
+0!
+$end
+#1000
+b1 &
+#21000
+0"
+1!
+b1001 $
+b1001 '
+0)
+1*
+b1001 +
+#22000
+b10 &
+#42000
+1"
+0!
+b1000 $
+b1000 '
+1)
+0*
+b1000 +
+#43000
+b11 &
+#63000
+0"
+1!
+b1111 $
+b1111 '
+0)
+1*
+b1111 +
+#64000
+b100 &
+#84000
+b101 $
+b101 '
+b101 +
+#85000
+b101 &
+#105000
+1"
+0!
+b1010 $
+b1010 '
+1)
+0*
+b1010 +
+#106000
+b110 &
+#126000
+b1100 $
+b1100 '
+b1100 +
+#127000
+b111 &
+#147000
+0"
+1!
+b1101 $
+b1101 '
+0)
+1*
+b1101 +
+#148000
+b1000 &
+#168000
