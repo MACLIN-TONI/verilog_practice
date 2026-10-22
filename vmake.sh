@@ -11,14 +11,14 @@ mkdir -p "$dut"/{rtl,tb,sim,docs,waves}
 
 cd "$dut" || exit 1
 
-touch "rtl/$dut.sv"
-touch "tb/tb_$dut.sv"
+touch "rtl/$dut.v"
+touch "tb/tb_$dut.v"
 
 cat > Makefile <<EOF
 DUT ?= $dut
 
-RTL = rtl/\$(DUT).sv
-TB = tb/tb_\$(DUT).sv
+RTL = rtl/\$(DUT).v
+TB = tb/tb_\$(DUT).v
 TOP = tb_\$(DUT)
 OBJ_DIR = sim/obj_dir
 SIM = \$(OBJ_DIR)/V\$(TOP)
@@ -51,3 +51,4 @@ check: run
 clean:
 	rm -rf \$(OBJ_DIR)
 	rm -f \$(WAVE) \$(LOG)
+EOF
