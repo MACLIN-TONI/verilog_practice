@@ -1,0 +1,120 @@
+BARREL SHIFTER — INTERVIEW QUESTIONS AND ANSWERS
+
+These questions describe the current Barrel_Shifter RTL. Although the module
+name says “shifter,” its operation is a circular left rotation, also called a
+rotate-left operation.
+
+1. What does a barrel shifter do?
+A barrel shifter shifts or rotates a word by a selectable number of bit
+positions using combinational logic. This implementation performs a rotate
+left, where bits leaving the most-significant end wrap around to the least-
+significant end.
+
+2. What is the difference between a logical shift and a rotation?
+A logical shift inserts zeros into the vacated positions and discards shifted-
+out bits. A rotation wraps shifted-out bits around to the other end. This RTL
+rotates; it does not insert zeros.
+
+3. What are the default input, select, and output widths?
+WIDTH defaults to 8, so `in` and `out` are 8 bits. `sel` is `$clog2(8)`, or 3
+bits, which selects rotation amounts 0 through 7.
+
+4. What happens when sel is zero?
+No rotation occurs, so `out` equals `in`.
+
+5. What is the result of rotating 8'b1000_0001 left by one?
+The result is 8'b0000_0011. The leading 1 wraps around to bit 0, while the
+other 1 moves from bit 0 to bit 1.
+
+6. How does the RTL build the rotation?
+It creates a series of intermediate words. At each stage, one select bit
+chooses between passing the word through and rotating it by a power of two.
+For WIDTH=8, the stages rotate by 1, 2, and 4 positions.
+
+7. Why use powers-of-two rotation stages?
+Any select value can be represented as a sum of powers of two. Combining the
+selected stage rotations therefore produces the requested rotation. The
+number of stages grows logarithmically with the word width.
+
+8. What does the concatenation in a stage do?
+It rearranges slices of the current word so the bits that move past one end
+reappear at the other. The conditional operator selects that rearranged word
+or the unchanged word.
+
+9. Is this a sequential or combinational circuit?
+It is combinational. It has no clock, reset, or stored state; the output is
+computed from the current input and select value.
+
+10. What is a useful mathematical description of the output?
+For a power-of-two WIDTH and a valid rotation amount s, output bit k is input
+bit `(k+s) modulo WIDTH`, using Verilog bit indices where bit 0 is the
+least-significant bit.
+
+11. How does the design's hardware cost scale?
+The staged structure uses about `$clog2(WIDTH)` mux stages, with each stage
+selecting among WIDTH output bits. Its mux cost therefore scales roughly as
+WIDTH times log2(WIDTH), rather than building a separate full datapath for
+every possible rotation amount.
+
+12. What is the logic depth for WIDTH=8?
+There are three conditional stages, selected by sel[0], sel[1], and sel[2].
+Ignoring routing and mapping details, a signal passes through up to three
+2-to-1 mux levels.
+
+13. Why is a barrel shifter useful compared with shifting one bit per cycle?
+A barrel shifter can produce the selected shift or rotation in one
+combinational evaluation, which can reduce cycle count. The tradeoff is more
+combinational hardware and potentially a longer combinational path.
+
+14. What does the current testbench verify?
+It tests eight input patterns and all eight rotation amounts for each pattern,
+then compares the DUT output with a rotate-left reference expression. That is
+64 input/select combinations for the default WIDTH=8.
+
+15. Why use several input patterns?
+Patterns such as all-zero, all-one, alternating bits, and asymmetric values
+help expose different wiring mistakes. Asymmetric patterns are especially
+useful because reversed or misplaced bits are easier to notice.
+
+16. Why is sel=0 an important test?
+It checks the bypass case and can reveal errors in the stage wiring or select
+interpretation. It also verifies that no rotation occurs when every select
+bit is zero.
+
+17. Why should the testbench use case equality (`===`)?
+Case equality treats X and Z as literal values and always returns 0 or 1. An
+unexpected X in the output therefore causes a clear mismatch instead of
+making an ordinary equality comparison evaluate to X.
+
+18. What is the relationship between rotation by s and rotation by WIDTH-s?
+For nonzero s, rotating left by s is equivalent to rotating right by
+WIDTH-s. Rotating left by WIDTH returns the original word, equivalent to a
+rotation by zero.
+
+19. What parameter limitation should be considered?
+The current implementation is designed for power-of-two widths of at least
+2. For a non-power-of-two WIDTH, `$clog2(WIDTH)` permits select encodings that
+may request amounts outside the intended range, and the staged wiring needs
+careful review. WIDTH=1 also makes `$clog2(WIDTH)` zero, which requires special
+handling.
+
+20. How would you support a non-power-of-two width safely?
+Define the allowed rotation range and select encoding explicitly, make sure
+all generated slices remain legal, and handle unused select values. Then test
+every valid rotation amount and all unused encodings according to the chosen
+behavior.
+
+21. What is the difference between left and right rotation?
+A left rotation moves each bit toward a higher bit index and wraps the
+most-significant bit to bit 0. A right rotation moves each bit toward a lower
+index and wraps bit 0 to the most-significant position.
+
+22. What other corner cases could be added to verification?
+Test all-zero and all-one words, one-hot and one-cold words at every select
+value, asymmetric patterns, and every valid select encoding. For a parameterized
+module, repeat the checks for each supported WIDTH.
+
+23. What timing concern applies to this design?
+The input-to-output path can pass through one mux stage per select bit. The
+maximum combinational delay should be checked against the target clock period
+when this block is placed between registers in a larger design.
