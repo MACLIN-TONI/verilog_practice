@@ -1,0 +1,16 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | in = 01111111 | out = 00001 | exp = 00001
+PASS | in = 00111111 | out = 00010 | exp = 00010
+PASS | in = 00011111 | out = 00011 | exp = 00011
+PASS | in = 00001111 | out = 00100 | exp = 00100
+PASS | in = 00000111 | out = 00101 | exp = 00101
+PASS | in = 00000011 | out = 00110 | exp = 00110
+PASS | in = 00000001 | out = 00111 | exp = 00111
+PASS | in = 00000000 | out = 01000 | exp = 01000
+PASS | in = 11111111 | out = 00000 | exp = 00000
+PASS | in = 10101010 | out = 00000 | exp = 00000
+PASS | in = 11000000 | out = 00000 | exp = 00000
+SUMMARY
+PASS =          11
+FAIL =           0
+tb/tb_Leading_Zero_Detector.v:68: $finish called at 321000 (1ps)
