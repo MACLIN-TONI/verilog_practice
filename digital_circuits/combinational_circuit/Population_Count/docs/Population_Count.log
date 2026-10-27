@@ -1,0 +1,21 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | in = 00000000 | out = 0000 | exp = 0000
+PASS | in = 00010001 | out = 0010 | exp = 0010
+PASS | in = 00100010 | out = 0010 | exp = 0010
+PASS | in = 00110011 | out = 0100 | exp = 0100
+PASS | in = 01000100 | out = 0010 | exp = 0010
+PASS | in = 01010101 | out = 0100 | exp = 0100
+PASS | in = 01100110 | out = 0100 | exp = 0100
+PASS | in = 01110111 | out = 0110 | exp = 0110
+PASS | in = 10001000 | out = 0010 | exp = 0010
+PASS | in = 10011001 | out = 0100 | exp = 0100
+PASS | in = 10101010 | out = 0100 | exp = 0100
+PASS | in = 10111011 | out = 0110 | exp = 0110
+PASS | in = 11001100 | out = 0100 | exp = 0100
+PASS | in = 11011101 | out = 0110 | exp = 0110
+PASS | in = 11101110 | out = 0110 | exp = 0110
+PASS | in = 11111111 | out = 1000 | exp = 1000
+SUMMARY
+PASS =          16
+FAIL =           0
+tb/tb_Population_Count.v:74: $finish called at 296000 (1ps)
