@@ -1,0 +1,27 @@
+$date
+	Thu Oct 29 03:57:27 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module code15 $end
+$var event 1 ! _ivl_0 $end
+$var reg 4 " a [3:0] $end
+$var reg 4 # b [3:0] $end
+$var reg 4 $ c [3:0] $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b110 $
+b101 #
+bx "
+1!
+$end
+#100
