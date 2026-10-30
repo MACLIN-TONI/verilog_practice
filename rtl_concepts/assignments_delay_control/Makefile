@@ -1,4 +1,4 @@
-DUT ?= Barrel_Shifter
+DUT ?= code
 
 RTL = $(DUT).v
 

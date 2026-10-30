@@ -34,6 +34,11 @@ module code24;
         wait(count==7) $display("time = %0t |   count == 7",$time);
     end
 
+    initial begin
+        @(count==3) $display("time = %0t |   count ==3",$time);
+        @(count==2) $display("time = %0t |   count ==3",$time);
+    end
+
     
 
     initial begin
