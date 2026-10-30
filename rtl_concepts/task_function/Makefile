@@ -1,6 +1,6 @@
-DUT ?= 1
+DUT ?= code1
 
-RTL = code$(DUT).v
+RTL = $(DUT).v
 
 TOP = RTL
 SIM = sim.out
