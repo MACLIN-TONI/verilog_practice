@@ -8,7 +8,13 @@ module code2;
         c<=15;
         $display(a," ",b," ",c);
         $display(a," ",b," ",c);
+        #2;
+        $strobe("strobe",a," ",b," ",c);
+        a<=1;
+        b<=2;
+        c<=3;
         #1;
         $display(a," ",b," ",c);
+        c<=8;
     end
 endmodule

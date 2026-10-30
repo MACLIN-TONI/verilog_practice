@@ -12,9 +12,14 @@ module code6;
         c = 6;
         $display($time," ",a," ",b," ",c);
         #1;
-        #0 a = 5;
-        #0 b = 10;
-        #0 c = 14;
+        a <= 5;
+        #0 a <= 10;
+        a <= 14;
+        $display($time," ",a," ",b," ",c);
+
+        #1;
+        a <= 5;
+        #0 a <= 10;
         $display($time," ",a," ",b," ",c);
 
         a = 1;

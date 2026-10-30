@@ -6,6 +6,10 @@ module code7;
         $dumpfile("dump.vcd");
         $dumpvars(0,code7);
     end
+    initial begin
+        c=1;
+
+    end
     always @(*) begin
         a = b;
     end

@@ -6,10 +6,14 @@ module code15;
         $dumpfile("dump.vcd");
         $dumpvars(0,code15);
     end
+    // initial begin
+    //     a=0;
+    // end
     always @(*) begin
         b <=10;
         c <=15;
         #1;
+        $display($time," ",a," ",b," ",c);
         
     end
     // always @(*) begin
@@ -18,5 +22,8 @@ module code15;
     initial begin
         #100;
         $display($time," ",a," ",b," ",c);
+    end
+    initial begin
+        a=0;
     end
 endmodule
