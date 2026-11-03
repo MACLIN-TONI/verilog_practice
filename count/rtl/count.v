@@ -8,28 +8,38 @@ module count (
     
     assign out = {A,B,C};
 
-    T Cff(
+    
+    SR Cff(
         .clk(clk),
         .en(1),
         .areset_n(areset_n),
-        .t(1),
-        .q(C)        
+        .s(Cb),
+        .r(C),
+        .q(C),
+        .qb(Cb)
+        
     );
 
-    T Bff(
-        .clk(~C),
+    SR Bff(
+        .clk(Cb),
         .en(1),
         .areset_n(areset_n),
-        .t(1),
-        .q(B)        
+        .s(Bb),
+        .r(B),
+        .q(B),
+        .qb(Bb)
+        
     );
 
-    T Aff(
-        .clk(~B),
+    SR Aff(
+        .clk(Bb),
         .en(1),
         .areset_n(areset_n),
-        .t(1),
-        .q(A)        
+        .s(Ab),
+        .r(A),
+        .q(A),
+        .qb(Ab)
+        
     );
 
 endmodule
