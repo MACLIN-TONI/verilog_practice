@@ -1,0 +1,2 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+tb/tb_UNIVERSAL.v:53: $finish called at 226000 (1ps)
