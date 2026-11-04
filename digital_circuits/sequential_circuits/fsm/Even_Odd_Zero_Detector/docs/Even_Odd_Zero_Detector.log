@@ -1,0 +1,22 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+din = 0 || zero = 1  | odd = 0 | even = 0
+din = 0 || zero = 1  | odd = 0 | even = 0
+din = 0 || zero = 1  | odd = 0 | even = 0
+din = 1 || zero = 0  | odd = 1 | even = 0
+din = 1 || zero = 0  | odd = 0 | even = 1
+din = 1 || zero = 0  | odd = 1 | even = 0
+din = 1 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 1  | odd = 0 | even = 0
+din = 0 || zero = 1  | odd = 0 | even = 0
+din = 0 || zero = 1  | odd = 0 | even = 0
+din = 1 || zero = 0  | odd = 1 | even = 0
+din = 1 || zero = 0  | odd = 0 | even = 1
+din = 1 || zero = 0  | odd = 1 | even = 0
+din = 1 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 0  | odd = 0 | even = 1
+din = 0 || zero = 0  | odd = 0 | even = 1
+tb/tb_Even_Odd_Zero_Detector.v:55: $finish called at 316000 (1ps)
