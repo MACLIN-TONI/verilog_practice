@@ -1,0 +1,403 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+Road A   |  Road B
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 1
+yellow = 0 | yellow = 0
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 0 | green  = 0
+yellow = 0 | yellow = 1
+red    = 1 | red    = 0
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 1 | green  = 0
+yellow = 0 | yellow = 0
+red    = 0 | red    = 1
+---------------------------
+green  = 0 | green  = 0
+yellow = 1 | yellow = 0
+red    = 0 | red    = 1
+tb/tb_Traffic_Light_Controller.v:47: $finish called at 1196000 (1ps)
