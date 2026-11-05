@@ -1,0 +1,2 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+tb/tb_Vending_Machine.v:67: $finish called at 285000 (1ps)
