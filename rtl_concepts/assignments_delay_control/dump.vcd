@@ -1,5 +1,5 @@
 $date
-	Fri Oct 30 07:20:28 2026
+	Thu Nov 12 07:36:04 2026
 $end
 $version
 	Icarus Verilog
@@ -7,12 +7,11 @@ $end
 $timescale
 	1s
 $end
-$scope module code24 $end
-$var event 1 ! update5 $end
-$var reg 4 " count [3:0] $end
-$scope begin $ivl_for_loop0 $end
-$var integer 32 # i [31:0] $end
-$upscope $end
+$scope module code20 $end
+$var event 1 ! _ivl_0 $end
+$var reg 4 " x [3:0] $end
+$var reg 4 # y [3:0] $end
+$var reg 4 $ z [3:0] $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
@@ -20,41 +19,9 @@ $dumpall
 $end
 #0
 $dumpvars
+b0 $
 b0 #
-b1 "
+b0 "
 1!
 $end
 #1
-b10 "
-b1 #
-#2
-b11 "
-b10 #
-#3
-b100 "
-b11 #
-#4
-b101 "
-b100 #
-#5
-b110 "
-1!
-b101 #
-#6
-b111 "
-b110 #
-#7
-b1000 "
-b111 #
-#8
-b1001 "
-b1000 #
-#9
-b1010 "
-b1001 #
-#10
-b1011 "
-b1010 #
-#11
-b1011 #
-#20

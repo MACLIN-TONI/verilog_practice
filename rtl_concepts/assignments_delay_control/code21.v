@@ -11,7 +11,6 @@ module code21;
         z=15;
         z=10;
         
-        
     end
 
 

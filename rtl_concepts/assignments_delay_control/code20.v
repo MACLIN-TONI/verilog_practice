@@ -14,12 +14,12 @@ module code20;
     end
 
     always @(*) begin
-        z <=x;
-    end
-
-    always @(*) begin
         z <=y;
     end
+
+    // always @(*) begin
+    //     z <=y;
+    // end
    
 
     initial begin
