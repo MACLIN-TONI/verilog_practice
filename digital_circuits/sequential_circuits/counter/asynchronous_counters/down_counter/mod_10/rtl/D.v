@@ -1,25 +1,19 @@
 module D (
-    input clk,
-    input en,
-    input areset_n,
-    input apreset,
-    input d,
+    input      clk,
+    input      en,
+    input      areset_n,
+    input      preset,   
+    input      d,
     output reg q
 );
-
-    always @(posedge clk, negedge areset_n, posedge apreset) begin
-        if(!areset_n) begin
+    always @(posedge clk, negedge areset_n, posedge preset) begin
+        if (!areset_n)
             q <= 1'b0;
-        end
-        else if(apreset) begin
+        else if (preset)
             q <= 1'b1;
-        end
-        else if(en) begin
+        else if (en)
             q <= d;
-        end
-        else begin
+        else
             q <= q;
-        end
     end
-
 endmodule
