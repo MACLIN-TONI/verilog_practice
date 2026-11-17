@@ -10,9 +10,13 @@ module random(
             {a,b,c} <= 3'b000;
         end
         else begin
-            a <= (~b & c) | (a & b);
-            b <= (a & ~b) | (a & c) | (~a & b & ~c);
-            c <= (~a & ~b) | (~a & ~c) | (~b & c) ; 
+            // a <= (~b & c) | (a & b);
+            // b <= (a & ~b) | (a & c) | (~a & b & ~c);
+            // c <= (~a & ~b) | (~a & ~c) | (~b & c) ; 
+
+            a <= (a & ~c) | (a & ~b) | (~a & b & c);
+            b <= (~b & c) | (b & ~c);
+            c <= ~c; 
         end
     end
 endmodule

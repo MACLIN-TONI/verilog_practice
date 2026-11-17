@@ -1,15 +1,15 @@
 VCD info: dumpfile waves/dump.vcd opened for output.
 out = 0
 out = 1
-out = 5
-out = 7
-out = 6
-out = 4
 out = 2
 out = 3
+out = 4
+out = 5
+out = 6
+out = 7
 out = 0
 out = 1
-out = 5
-out = 7
-out = 6
+out = 2
+out = 3
+out = 4
 tb/tb_random.v:29: $finish called at 262000 (1ps)

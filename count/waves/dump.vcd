@@ -1,5 +1,5 @@
 $date
-	Tue Nov  3 12:40:18 2026
+	Tue Nov 17 09:08:39 2026
 $end
 $version
 	Icarus Verilog
@@ -15,38 +15,29 @@ $scope module dut $end
 $var wire 1 " areset_n $end
 $var wire 1 # clk $end
 $var wire 3 $ out [2:0] $end
-$var wire 1 % Cb $end
-$var wire 1 & C $end
-$var wire 1 ' Bb $end
-$var wire 1 ( B $end
-$var wire 1 ) Ab $end
-$var wire 1 * A $end
+$var wire 1 % C $end
+$var wire 1 & B $end
+$var wire 1 ' A $end
 $scope module Aff $end
 $var wire 1 " areset_n $end
-$var wire 1 + en $end
-$var wire 1 * r $end
-$var wire 1 ) s $end
-$var wire 1 ' clk $end
-$var reg 1 * q $end
-$var reg 1 ) qb $end
+$var wire 1 ( en $end
+$var wire 1 ) t $end
+$var wire 1 & clk $end
+$var reg 1 ' q $end
 $upscope $end
 $scope module Bff $end
 $var wire 1 " areset_n $end
-$var wire 1 , en $end
-$var wire 1 ( r $end
-$var wire 1 ' s $end
+$var wire 1 * en $end
+$var wire 1 + t $end
 $var wire 1 % clk $end
-$var reg 1 ( q $end
-$var reg 1 ' qb $end
+$var reg 1 & q $end
 $upscope $end
 $scope module Cff $end
 $var wire 1 " areset_n $end
 $var wire 1 # clk $end
-$var wire 1 - en $end
-$var wire 1 & r $end
-$var wire 1 % s $end
-$var reg 1 & q $end
-$var reg 1 % qb $end
+$var wire 1 , en $end
+$var wire 1 - t $end
+$var reg 1 % q $end
 $upscope $end
 $upscope $end
 $upscope $end
@@ -59,12 +50,12 @@ $dumpvars
 1-
 1,
 1+
-0*
+1*
 1)
-0(
-1'
+1(
+0'
 0&
-1%
+0%
 b0 $
 0#
 0"
@@ -75,119 +66,101 @@ $end
 #12000
 1"
 #20000
+b1 !
+b1 $
+1%
 0#
 #30000
-0%
-b1 !
-b1 $
-1&
 1#
 #40000
+1&
+b10 !
+b10 $
+0%
 0#
 #50000
-0'
-1(
-1%
-b10 !
-b10 $
-0&
 1#
 #60000
+b11 !
+b11 $
+1%
 0#
 #70000
-0%
-b11 !
-b11 $
-1&
 1#
 #80000
+1'
+0&
+b100 !
+b100 $
+0%
 0#
 #90000
-0)
-1*
-1'
-0(
-1%
-b100 !
-b100 $
-0&
 1#
 #100000
-0#
-#110000
-0%
 b101 !
 b101 $
-1&
+1%
+0#
+#110000
 1#
 #120000
-0#
-#130000
-0'
-1(
-1%
+1&
 b110 !
 b110 $
-0&
+0%
+0#
+#130000
 1#
 #140000
-0#
-#150000
-0%
 b111 !
 b111 $
-1&
+1%
+0#
+#150000
 1#
 #160000
-0#
-#170000
-1)
-0*
-1'
-0(
-1%
+0'
+0&
 b0 !
 b0 $
-0&
+0%
+0#
+#170000
 1#
 #180000
-0#
-#190000
-0%
 b1 !
 b1 $
-1&
+1%
+0#
+#190000
 1#
 #200000
-0#
-#210000
-0'
-1(
-1%
+1&
 b10 !
 b10 $
-0&
+0%
+0#
+#210000
 1#
 #220000
-0#
-#230000
-0%
 b11 !
 b11 $
-1&
+1%
+0#
+#230000
 1#
 #240000
-0#
-#250000
-0)
-1*
 1'
-0(
-1%
+0&
 b100 !
 b100 $
-0&
+0%
+0#
+#250000
 1#
 #260000
+b101 !
+b101 $
+1%
 0#
 #262000
