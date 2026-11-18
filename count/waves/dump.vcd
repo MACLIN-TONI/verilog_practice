@@ -1,5 +1,5 @@
 $date
-	Tue Nov 17 09:08:39 2026
+	Tue Nov 17 11:53:01 2026
 $end
 $version
 	Icarus Verilog
@@ -20,23 +20,23 @@ $var wire 1 & B $end
 $var wire 1 ' A $end
 $scope module Aff $end
 $var wire 1 " areset_n $end
-$var wire 1 ( en $end
-$var wire 1 ) t $end
+$var wire 1 ( d $end
+$var wire 1 ) en $end
 $var wire 1 & clk $end
 $var reg 1 ' q $end
 $upscope $end
 $scope module Bff $end
 $var wire 1 " areset_n $end
-$var wire 1 * en $end
-$var wire 1 + t $end
+$var wire 1 * d $end
+$var wire 1 + en $end
 $var wire 1 % clk $end
 $var reg 1 & q $end
 $upscope $end
 $scope module Cff $end
 $var wire 1 " areset_n $end
 $var wire 1 # clk $end
-$var wire 1 , en $end
-$var wire 1 - t $end
+$var wire 1 , d $end
+$var wire 1 - en $end
 $var reg 1 % q $end
 $upscope $end
 $upscope $end
@@ -66,6 +66,7 @@ $end
 #12000
 1"
 #20000
+0,
 b1 !
 b1 $
 1%
@@ -73,7 +74,9 @@ b1 $
 #30000
 1#
 #40000
+0*
 1&
+1,
 b10 !
 b10 $
 0%
@@ -81,6 +84,7 @@ b10 $
 #50000
 1#
 #60000
+0,
 b11 !
 b11 $
 1%
@@ -88,8 +92,11 @@ b11 $
 #70000
 1#
 #80000
+0(
 1'
+1*
 0&
+1,
 b100 !
 b100 $
 0%
@@ -97,6 +104,7 @@ b100 $
 #90000
 1#
 #100000
+0,
 b101 !
 b101 $
 1%
@@ -104,7 +112,9 @@ b101 $
 #110000
 1#
 #120000
+0*
 1&
+1,
 b110 !
 b110 $
 0%
@@ -112,6 +122,7 @@ b110 $
 #130000
 1#
 #140000
+0,
 b111 !
 b111 $
 1%
@@ -119,8 +130,11 @@ b111 $
 #150000
 1#
 #160000
+1(
 0'
+1*
 0&
+1,
 b0 !
 b0 $
 0%
@@ -128,6 +142,7 @@ b0 $
 #170000
 1#
 #180000
+0,
 b1 !
 b1 $
 1%
@@ -135,7 +150,9 @@ b1 $
 #190000
 1#
 #200000
+0*
 1&
+1,
 b10 !
 b10 $
 0%
@@ -143,6 +160,7 @@ b10 $
 #210000
 1#
 #220000
+0,
 b11 !
 b11 $
 1%
@@ -150,8 +168,11 @@ b11 $
 #230000
 1#
 #240000
+0(
 1'
+1*
 0&
+1,
 b100 !
 b100 $
 0%
@@ -159,6 +180,7 @@ b100 $
 #250000
 1#
 #260000
+0,
 b101 !
 b101 $
 1%

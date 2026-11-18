@@ -14,9 +14,9 @@ module random(
             // b <= (a & ~b) | (a & c) | (~a & b & ~c);
             // c <= (~a & ~b) | (~a & ~c) | (~b & c) ; 
 
-            a <= (a & ~c) | (a & ~b) | (~a & b & c);
-            b <= (~b & c) | (b & ~c);
-            c <= ~c; 
+            a <= (~a & ~c) | (~a & ~b) | (a & b & c);
+            b <= (b & ~a) | (~a & ~c) | (a & ~b & c);
+            c <= (a & c) | (a & b) | (~a & ~b & ~c);
         end
     end
 endmodule

@@ -6,7 +6,7 @@ module D (
     output reg q
 );
 
-    always @(posedge clk, negedge areset_n) begin
+    always @(negedge clk, negedge areset_n) begin
         if(!areset_n) begin
             q <= 1'b0;
         end
